@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<crux:BeanProvider xmlns:fx="http://ns.adobe.com/mxml/2009"
+				   xmlns:crux="library://ns.apache.org/royale/crux"
+				   xmlns:mx="library://ns.apache.org/royale/mx">
+	<fx:Script>
+		<![CDATA[
+		// For Crux, it is usual to access the services via injection, so
+		// this code block is not necessary for Crux, but it permits using Singleton access
+		// in a way that is common for Cairngorm. This might be desirable or easier for transitional porting work
+		private static var instance:Services;
+		public static function getInstance() : Services
+		{
+			if (instance == null)
+			{
+				throw new Error('access before configuration');
+			}
+			return instance;
+		}
+
+
+		public static const LOGIN_SERVICE:String = "loginServiceId";
+
+
+		override public function initialize():void
+		{
+			super.initialize();
+			instance = this;
+		}
+
+		//support 'Cairngorm-like' singleton access:
+		//Services.getInstance().getRemoteObject(id);
+		import mx.rpc.remoting.mxml.RemoteObject;
+		public function getRemoteObject(serviceNameId:String):RemoteObject {
+			return this[serviceNameId] as RemoteObject;
+		}
+
+		]]>
+	</fx:Script>
+	<mx:RemoteObject id="loginServiceId"
+					destination="userLoginLogoutService"
+					endpoint="../messagebroker/amf"
+					showBusyCursor="false"/>
+
+</crux:BeanProvider>
