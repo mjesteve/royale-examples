@@ -1,3 +1,31 @@
+#-----------------------------------------
+# Maven ----------------------------------
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+# -----------------------------------------
+# Visual Studio Code ----------------------
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+#-----------------------------------------
+# ActionScript ---------------------------
 # Build and Release Folders
 bin-debug/
 bin-release/
@@ -16,3 +44,29 @@ bin-release/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+
+# -----------------------------------------
+# Windows thumbnail cache files -----------
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
