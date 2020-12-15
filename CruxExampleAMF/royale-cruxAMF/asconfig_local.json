@@ -1,0 +1,32 @@
+{
+    "config": "royale",
+    "compilerOptions": {
+        "debug": true,
+        "targets": ["JSRoyale"],
+        "html-template": "src/main/resources/royale-cruxAMF-template.html",
+        "source-path": [
+            "src/main/royale"
+        ],
+        "library-path": [
+            "${royalelib}/js/libs/MXRoyale-0.9.8-SNAPSHOT-js.swc"
+        ],
+        "js-library-path": [
+            "${royalelib}/js/libs/MXRoyale-0.9.8-SNAPSHOT-js.swc"
+        ],
+        "define": [
+            {
+                "name": "BUILD::buildNumber",
+                "value": "'buildNumber'"
+            },
+            {
+                "name": "BUILD::buildVersion",
+                "value": "'project.version'"
+            }
+        ],
+        "source-map": true
+    },
+    "files":
+    [
+        "src/main/royale/App.mxml"
+    ]
+}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:ListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:j="library://ns.apache.org/royale/jewel"
+    xmlns:js="library://ns.apache.org/royale/basic"
+    xmlns="http://www.w3.org/1999/xhtml" xmlns:html="library://ns.apache.org/royale/html"
+    width="100%" style=" padding: 0px;">
+    <fx:Script>
+    
+        <![CDATA[
+            import com.mjesteve.royale.templates.vos.DataItemVO;
+            import com.mjesteve.royale.templates.models.AppModel;
+
+            [Bindable]
+            [Inject(source="appModel", required="true")]
+            public var appModel:AppModel;    
+
+            [Bindable("dataChange")]
+            public function get getReg():DataItemVO
+            {                
+                if(!data){
+                    return new DataItemVO("","",0,0);
+                }else{
+                    var item:DataItemVO = data as DataItemVO;
+                    return item;
+                }
+            }
+
+            [Bindable("dataChange")]
+            private function getMultiSimple():String{
+                if(getReg.multiSingle == 0){
+                    return "Multiple"
+                }else{
+                    return "Single"
+                }
+            }
+            
+            [PostConstruct]
+            public function setUpCrux():void {                        
+                trace("AppModel Inject");                
+            }
+
+        ]]>
+    </fx:Script>
+
+    <j:beads>
+        <js:ItemRendererDataBinding />
+        <j:HorizontalLayout itemsVerticalAlign="itemsCenter" itemsHorizontalAlign="itemsCenter" />
+    </j:beads>
+
+    <j:Grid gap="true" width="100%">
+        <j:GridCell desktopNumerator="1" desktopDenominator="6" tabletNumerator="1" tabletDenominator="6" phoneNumerator="1" phoneDenominator="6">
+            <j:VGroup height="100%" itemsVerticalAlign="itemsCenter" itemsHorizontalAlign="itemsCenter">
+                <j:Label html="{getReg.id}" >
+                    <j:beads>
+                        <j:SizeControl size="small"/>
+                        <j:TextAlign align="left"/>
+                    </j:beads>
+                </j:Label>
+            </j:VGroup>
+        </j:GridCell>
+        <j:GridCell desktopNumerator="1" desktopDenominator="3" tabletNumerator="1" tabletDenominator="3" phoneNumerator="1" phoneDenominator="3" itemsVerticalAlign="itemsCenter">
+            <j:VGroup height="100%" itemsVerticalAlign="itemsCenter" itemsHorizontalAlign="itemsCenter">
+                <j:Label html="{getReg.name}" width="100%">
+                    <j:beads>
+                        <j:TruncateText/>                        
+                        <j:SizeControl size="small"/>
+                        <j:TextAlign align="left"/>
+                    </j:beads>
+                </j:Label>
+            </j:VGroup>
+        </j:GridCell>
+        <j:GridCell desktopNumerator="1" desktopDenominator="6" tabletNumerator="1" tabletDenominator="6" phoneNumerator="1" phoneDenominator="6" itemsVerticalAlign="itemsCenter">
+            <j:VGroup height="100%" itemsVerticalAlign="itemsCenter" itemsHorizontalAlign="itemsCenter">
+                <j:CheckBox text="" style=" width: auto;" selected="{getReg.active}">
+                    <j:beads>
+                        <j:Disabled/>
+                    </j:beads>
+                </j:CheckBox>
+            </j:VGroup>
+        </j:GridCell>
+        <j:GridCell desktopNumerator="1" desktopDenominator="3" tabletNumerator="1" tabletDenominator="3" phoneNumerator="1" phoneDenominator="3" itemsVerticalAlign="itemsCenter">
+            <j:VGroup height="100%" itemsVerticalAlign="itemsCenter" itemsHorizontalAlign="itemsCenter">
+                <j:Label html="{getMultiSimple()}" width="100%">
+                    <j:beads>
+                        <j:TruncateText/>                        
+                        <j:SizeControl size="small"/>
+                        <j:TextAlign align="left"/>
+                    </j:beads>
+                </j:Label>
+            </j:VGroup>
+        </j:GridCell>
+
+    </j:Grid>
+</j:ListItemRenderer>

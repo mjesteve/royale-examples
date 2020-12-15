@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:Drawer xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:j="library://ns.apache.org/royale/jewel"
+    xmlns:js="library://ns.apache.org/royale/basic"
+    xmlns:html="library://ns.apache.org/royale/html">
+    <fx:Metadata>
+        [Event(name="onChangeView", type="org.apache.royale.events.Event")]
+    </fx:Metadata>
+    <fx:Script>
+        <![CDATA[
+            import org.apache.royale.jewel.Drawer;
+            import org.apache.royale.events.Event;
+            import org.apache.royale.jewel.Drawer;
+            import org.apache.royale.collections.ArrayList;
+            import org.apache.royale.icons.MaterialIcon;
+            import org.apache.royale.jewel.Navigation;
+            import org.apache.royale.collections.ArrayList;
+            import com.mjesteve.royale.templates.itemRenderers.NavigationIconLinkItemRenderer;
+            import com.mjesteve.royale.templates.vos.NavigationLinkVO;
+
+            private var _data:ArrayList;
+
+            public function get data():ArrayList
+            {
+            	return _data;
+            }
+
+            public function set data(value:ArrayList):void
+            {
+            	_data = value;
+                if (_data) fillData()
+            }
+
+            private var _selectedPage:String="";
+
+            [Bindable]
+            public function get selectedPage():String
+            {
+            	return _selectedPage;
+            }
+
+            public function set selectedPage(value:String):void
+            {
+            	_selectedPage = value;
+            }
+
+            private function fillData():void{                
+                var ar:ArrayList = new ArrayList
+                for each(var item:Object in data.source){
+                    var collapsable:String = "";
+
+                    var nItem:NavigationLinkVO = new NavigationLinkVO(item.description,'',MaterialIconType.LABEL)
+                    if(item.items && item.items.length > 0){
+                        collapsable = '$collapsible'
+                        var nSItem:NavigationLinkVO
+                        nItem.subMenu = new ArrayList
+                        for each(var subItem:Object in item.items.source){
+                            nSItem = new NavigationLinkVO(subItem.description,'card_panel',MaterialIconType.LABEL)                            
+                            nItem.subMenu.addItem(nSItem);
+                        }
+                    }else{
+                        collapsable = 'card_panel'
+                    }
+
+                    nItem.hash = collapsable;
+
+                    ar.addItem(nItem);
+                }
+                
+            navigator.dataProvider = ar
+            }
+
+            private function onNavigationChange(event:Event):void{
+                var itemmenu:NavigationLinkVO = (event.target as Navigation).selectedItem as NavigationLinkVO;
+                if (itemmenu.label == "First Item" && itemmenu.selectedChild.label == "SubItem1"){
+                    selectedPage = "data_panel"
+                }else{
+                    selectedPage = ""
+                }
+                dispatchEvent(new Event("onChangeView"));
+            }
+        ]]>
+    </fx:Script>
+
+        <j:beads>
+            <j:ResponsiveDrawer auto="true"/>
+        </j:beads>
+        <j:DrawerHeader>
+            <j:ImageButton src="assets/apache-royale-icon.svg" height="80"/>
+        </j:DrawerHeader>
+        <j:DrawerContent localId="drawerContent">
+            <j:Navigation localId="navigator" itemRenderer="NavigationIconLinkItemRenderer" change="onNavigationChange(event)"/>
+        </j:DrawerContent>
+
+        <j:DrawerFooter localId="drawerFooter">
+            <j:BarSection>
+                <j:IconButton>
+                    <j:icon>
+                        <js:MaterialIcon text="{MaterialIconType.FEEDBACK}" />
+                    </j:icon>
+                </j:IconButton>
+            </j:BarSection>
+        </j:DrawerFooter>
+
+    </j:Drawer>

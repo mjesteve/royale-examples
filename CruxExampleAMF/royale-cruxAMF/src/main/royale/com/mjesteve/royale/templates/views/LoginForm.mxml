@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:SectionContent xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:j="library://ns.apache.org/royale/jewel"
+    xmlns:html="library://ns.apache.org/royale/html"
+    xmlns:js="library://ns.apache.org/royale/basic">
+
+     <fx:Script>
+        <![CDATA[
+
+            import com.mjesteve.royale.templates.models.AppModel;
+            import com.mjesteve.royale.templates.events.LoginSignInEvent;
+            import org.apache.royale.events.Event;
+            import org.apache.royale.events.ValueChangeEvent;
+            import com.mjesteve.royale.templates.vos.LoginVO;
+
+            [Bindable]
+            [Inject(source="appModel", required="true")]
+            public var appModel:AppModel;    
+
+            private function clickHandler(event:MouseEvent):void {
+                var t:LoginVO = new LoginVO()
+                t.userName = userName.text
+                t.password = password.text
+                dispatchEvent(new LoginSignInEvent(LoginSignInEvent.EVENT_LOAD,t));
+            }
+
+            public function  loginError():void
+            {            	
+                statusLabel.text = "Bad credentials"
+            }
+
+        ]]>
+     </fx:Script>
+
+    <j:beads>
+		<js:SimpleStatesImpl/>
+        <j:VerticalCenteredLayout/>
+		<js:ContainerDataBinding/>
+	</j:beads>
+
+    <j:Card  localId="cardLogin" id="cardLogin">
+        <j:CardPrimaryContent>
+            <html:H3 text="User Login" className="primary-dark"/>
+            <j:HGroup>
+                <j:TextInput localId="userName">
+                    <j:beads>
+                        <j:TextPrompt prompt="Username"/>
+                    </j:beads>
+                </j:TextInput>
+            </j:HGroup>
+            <j:HGroup>
+                <j:TextInput localId="password">
+                    <j:beads>
+                        <js:PasswordInputBead/>
+                        <j:TextPrompt prompt="Password"/>
+                    </j:beads>
+                </j:TextInput>
+            </j:HGroup>
+            <j:Label localId="statusLabel" style="color:red;"/>
+        </j:CardPrimaryContent>
+        <j:CardActions>
+            <j:Button text="Send" emphasis="primary" outlined="true" click="clickHandler(event)"/>
+        </j:CardActions>
+    </j:Card>
+
+</j:SectionContent>

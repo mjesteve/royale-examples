@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:j="library://ns.apache.org/royale/jewel"
+			   xmlns:js="library://ns.apache.org/royale/basic"
+			   xmlns:crux="library://ns.apache.org/royale/crux"
+			   xmlns:lib="library://ns.mjesteve.com/royale/library"	   
+			   xmlns:ctr="com.mjesteve.royale.templates.controllers.*"
+               xmlns:views="com.mjesteve.royale.templates.views.*"
+               initialize="setUp()"
+			   >
+
+	<fx:Style source="../../main/resources/defaults.css"/>
+
+		<fx:Script>
+		<![CDATA[
+            import org.apache.royale.collections.ArrayList;
+			import org.apache.royale.events.Event;
+            import org.apache.royale.reflection.registerClassAlias;
+            import org.apache.royale.net.URLLoader;
+			import org.apache.royale.net.URLRequest;
+			import org.apache.royale.core.Strand;
+
+            /**
+	 		 *  @private
+             *  Register ArrayCollection alias to map to ArrayList
+             */
+            public function setUp():void
+			{
+				registerClassAlias("flex.messaging.io.ArrayCollection", ArrayList);
+			}
+			
+			override public function start():void{	
+				var xmlLoader:URLLoader = new URLLoader();
+				xmlLoader.addEventListener(Event.COMPLETE, loadXML);
+				xmlLoader.load(new URLRequest("assets/config/config.xml"));
+			}
+
+			private function loadXML(e:Event):void{             
+				var xmlData:XML = new XML (e.target.data);						
+				
+				servicesConfig.SampleService.source = xmlData.child("source").toString();
+				servicesConfig.loginChannel.channelId = xmlData.child("channelId").toString();
+				servicesConfig.loginChannel.serverName = xmlData.child("serverName").toString();
+				servicesConfig.loginChannel.serverPort = xmlData.child("serverPort").toString();
+				servicesConfig.loginChannel.contextRoot = xmlData.child("contextRoot").toString();
+				servicesConfig.loginChannel.endPointName = xmlData.child("endPointName").toString();
+				super.start();
+			}  
+			/**
+			 * Define Bean providers.
+			 */
+			public function getBeanProvidersClasses() :Array {
+				return [];
+			}
+
+			/**
+			 * Define custom package events.
+			 */
+			public function getEventPackages() :Array {
+				return ['com.mjesteve.royale.templates.events.*'];
+			}
+
+			/**
+			 * Define view packages to be wired up.
+			 */
+			public function getViewPackages() :Array {
+				return ['com.mjesteve.royale.templates.views.*'];
+			}
+
+
+		]]>	
+	</fx:Script>
+
+    <j:valuesImpl>
+        <js:SimpleCSSValuesImpl />
+    </j:valuesImpl>
+
+	<j:beads>
+		<js:ClassAliasBead/>
+
+		<crux:JSStageEvents packageExclusionFilter="_default_"/>
+		<crux:Crux>
+			<!-- BeanProviders simply contain the non-display objects that Crux should process. -->
+			<crux:beanProviders>
+				<lib:ServicesConfig id="servicesConfig"/>
+
+				<!--We can repeat this structure 'crux:BeanProvider' to define new models / controllers -->
+				<crux:BeanProvider>
+					<lib:AppModel id="appModel"/>
+					<ctr:AppController/>
+					<lib:AppDelegate/>
+				</crux:BeanProvider>
+			</crux:beanProviders>
+
+			<crux:config>
+				<crux:CruxConfig>
+					<crux:eventPackages>
+						<fx:Array>
+							<fx:String>com.mjesteve.royale.templates.events.*</fx:String>
+						</fx:Array>
+					</crux:eventPackages>
+					<crux:viewPackages>
+						<fx:Array>
+							<fx:String>com.mjesteve.royale.templates.views.*</fx:String>
+						</fx:Array>
+					</crux:viewPackages>
+				</crux:CruxConfig>
+			</crux:config>
+			
+		</crux:Crux>
+	</j:beads>
+
+	<j:initialView>
+		<views:MainExample id="mainContent" />
+	</j:initialView>
+</j:Application>

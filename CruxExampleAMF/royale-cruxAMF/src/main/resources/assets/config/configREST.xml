@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <service>WebApiTemplate/api</service>
+  <serviceId>rest-json</serviceId>
+  <protocol>http</protocol>
+  <serverName>localhost</serverName>
+  <serverPort>80</serverPort>
+  <resultFormat>text</resultFormat>
+</config>
