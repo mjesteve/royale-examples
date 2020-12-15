@@ -22,7 +22,7 @@
     <component id="ServicesConfigREST" class="com.mjesteve.royale.templates.beads.services.ServicesConfigREST"/>
 
     <component id="AppModel" class="com.mjesteve.royale.templates.models.AppModel"/>
-    
+    <component id="AppController" class="com.mjesteve.royale.templates.controllers.AppController"/>
     <component id="AppDelegate" class="com.mjesteve.royale.templates.services.AppDelegate"/>
     
     <component id="DataEvent" class="com.mjesteve.royale.templates.events.DataEvent"/>

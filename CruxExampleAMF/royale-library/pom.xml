@@ -72,7 +72,16 @@
             -js-dynamic-access-unknown-members=true; <!-- to access JSON object graph subobjects -->
             -source-map=true;
             -keep-code-with-metadata=Inject;            
-            -keep-as3-metadata+=Inject,EventHandler,Event,Bindable;
+            -keep-as3-metadata+=Inject,Dispatcher,EventHandler,PostConstruct,PreDestroy,ViewAdded,ViewRemoved,Bindable,Transient;
+            <!-- -keep-as3-metadata+=Inject,EventHandler,Event,Bindable; -->
+            <!-- 
+              -js-default-initializers=true;
+              -js-dynamic-access-unknown-members=true; 
+              -source-map=true;
+              -compiler.exclude-defaults-css-files=MXRoyale-${royale.framework.version}-js.swc:defaults.css;
+              -keep-as3-metadata+=Inject,Dispatcher,EventHandler,PostConstruct,PreDestroy,ViewAdded,ViewRemoved,Bindable,Transient;
+              -keep-code-with-metadata=Inject;
+              -show-binding-warnings=false; --> 
           </additionalCompilerOptions>
 
         </configuration>

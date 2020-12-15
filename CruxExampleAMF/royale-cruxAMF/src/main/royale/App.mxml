@@ -4,7 +4,6 @@
 			   xmlns:js="library://ns.apache.org/royale/basic"
 			   xmlns:crux="library://ns.apache.org/royale/crux"
 			   xmlns:lib="library://ns.mjesteve.com/royale/library"	   
-			   xmlns:ctr="com.mjesteve.royale.templates.controllers.*"
                xmlns:views="com.mjesteve.royale.templates.views.*"
                initialize="setUp()"
 			   >
@@ -23,6 +22,7 @@
             /**
 	 		 *  @private
              *  Register ArrayCollection alias to map to ArrayList
+			   xmlns:ctr="com.mjesteve.royale.templates.controllers.*"
              */
             public function setUp():void
 			{
@@ -87,7 +87,7 @@
 				<!--We can repeat this structure 'crux:BeanProvider' to define new models / controllers -->
 				<crux:BeanProvider>
 					<lib:AppModel id="appModel"/>
-					<ctr:AppController/>
+					<lib:AppController/>
 					<lib:AppDelegate/>
 				</crux:BeanProvider>
 			</crux:beanProviders>

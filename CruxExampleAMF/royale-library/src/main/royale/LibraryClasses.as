@@ -24,6 +24,7 @@ package
 		import com.mjesteve.royale.templates.events.ExceptionEvent;ExceptionEvent;
 
 		import  com.mjesteve.royale.templates.services.AppDelegate;AppDelegate;		
+		import  com.mjesteve.royale.templates.controllers.AppController;AppController;		
 
 		import com.mjesteve.royale.templates.events.LoginSignInEvent; LoginSignInEvent;
 		import com.mjesteve.royale.templates.events.DataEvent; DataEvent;
