@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<s:NavigatorContent xmlns:fx="http://ns.adobe.com/mxml/2009"
+					xmlns:mx="library://ns.apache.org/royale/mx"
+					xmlns:s="library://ns.apache.org/royale/spark"
+					xmlns:myComp="jp.co.tak.view.*"
+					creationComplete="callLater(init)">
+	
+	<fx:Script>
+		<![CDATA[
+		//	import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			
+		//	import flash.external.ExternalInterface;
+			
+			import jp.co.tak.event.LoginLoadEvent;
+		//	import jp.co.tak.event.LoginRoleViewEvent;
+			import jp.co.tak.event.LoginSignInEvent;
+			//import jp.co.tak.model.LoginModelLocator;
+			import jp.co.tak.model.LoginModel;
+			//import jp.co.tak.vo.userloginmanager.UserLoginVO;
+			import jp.co.tak.vo.UserLoginVO;
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			
+			import spark.components.NavigatorContent;
+
+			import org.apache.royale.events.IEventDispatcher;
+			
+			//var loginModel:LoginModelLocator = LoginModelLocator.getInstance();
+
+			import mx.events.KeyboardEvent;
+			import mx.events.FocusEvent;
+			import mx.collections.ArrayCollection;
+
+			public function getRoles():ArrayCollection{
+				var source:Array = [{'id':1, value:'User'},{'id':2, value:'Admin'}]
+
+				return new ArrayCollection(source);
+			}
+
+
+			[Inject]
+			public var loginModel:LoginModel;
+
+			[Dispatcher]
+			public var dispatcher:IEventDispatcher;
+			
+			private function init():void
+			{
+				var loginLoadEvent:LoginLoadEvent = new LoginLoadEvent(callBack);
+				//CairngormEventDispatcher.getInstance().dispatchEvent(loginLoadEvent);
+				dispatcher.dispatchEvent(loginLoadEvent);
+				setEventListener();
+			}
+			
+			public function setEventListener():void
+			{
+				loginBtn.addEventListener( mx.events.KeyboardEvent.KEY_DOWN,loginBtn_keyDownHandler);
+				loginBtn.addEventListener(MouseEvent.CLICK,toMenu);
+				roleNameList.addEventListener( mx.events.KeyboardEvent.KEY_DOWN,roleNameList_keyDownHandler);
+				userPassword.addEventListener( mx.events.KeyboardEvent.KEY_DOWN,loginBtn_keyDownHandler);
+			}
+			
+			private function toMenu(event:MouseEvent):void
+			{
+				if(userName.text == null || userName.text == "")
+					Alert.show("Enter User ID");
+				else if(userPassword.text == null || userPassword.text == "")
+					Alert.show("Enter Password");
+				else if(roleNameList.dataProvider == null || roleNameList.selectedIndex < 1)
+					Alert.show("Select Role");
+				else
+				{
+					this.parentApplication.publicSelectedIndex = 0;
+					loginBtn.removeEventListener( mx.events.KeyboardEvent.KEY_DOWN,loginBtn_keyDownHandler);
+					loginBtn.removeEventListener(MouseEvent.CLICK,toMenu);
+					roleNameList.removeEventListener( mx.events.KeyboardEvent.KEY_DOWN,roleNameList_keyDownHandler);
+					userPassword.removeEventListener( mx.events.KeyboardEvent.KEY_DOWN,loginBtn_keyDownHandler);
+					var userLoginVO:UserLoginVO  = new UserLoginVO();
+					userLoginVO.userId = userName.text;
+					userLoginVO.psw = userPassword.text;
+					userLoginVO.roleId = (roleNameList.dataProvider as ArrayCollection)[roleNameList.selectedIndex].id;
+					userLoginVO.roleName = (roleNameList.dataProvider as ArrayCollection)[roleNameList.selectedIndex].value;
+					var loginSignInEvent:LoginSignInEvent = new LoginSignInEvent(userLoginVO);
+					//CairngormEventDispatcher.getInstance().dispatchEvent(loginSignInEvent);
+					dispatcher.dispatchEvent(loginSignInEvent);
+					loginModel.setToken(this);
+				}
+			}
+			
+			public function callBack(userName:String,headerViewControl:ArrayCollection):void
+			{
+				this.parentApplication.homeRefresh();
+			}
+			
+			//[Embed(source="/jp/co/tak/view/img/loginBgImg_bak.png")]
+			[Bindable]
+			public var imgBackObj : String = "/jp/co/tak/view/img/loginBgImg_bak.png";
+			
+			protected function userName_enterHandler(event:FlexEvent):void
+			{
+				roleNameList.focusEnabled = true;
+				roleNameList.setFocus();
+			}
+			
+			private var clearFlag:Boolean = false;
+			private function clear():void
+			{
+				clearFlag = true;
+				userName.text = "";
+				userPassword.text = "";
+				userNameHid.text = "";
+				roleNameList.dataProvider = null;
+				userName.setFocus();
+			}
+			
+			protected function roleNameList_keyDownHandler(event: mx.events.KeyboardEvent):void
+			{
+				if(event.keyCode == 13)
+				{
+					userPassword.focusEnabled = true;
+					userPassword.setFocus();
+				}
+			}			
+
+			protected function userName_focusOutHandler(event:mx.events.FocusEvent):void
+			{
+				if(userName.text != userNameHid.text) 
+				{
+					if(userName.text == "")
+					{
+						userName.text = "";
+						userNameHid.text = "";
+						roleNameList.dataProvider = null;
+						userName.setFocus();
+					}else
+					{
+						userNameHid.text = userName.text;
+						//[Greg] Missing Event class here:
+						/*var loginRoleViewEvent:LoginRoleViewEvent = new LoginRoleViewEvent(userName.text);
+						dispatcher.dispatchEvent(loginRoleViewEvent);*/
+						loginModel.setToken(this);
+					}
+				}
+				clearFlag = false;
+			}
+
+		private function button1_keyDownHandler(event: mx.events.KeyboardEvent):void{
+
+		}
+
+		private function loginBtn_keyDownHandler(event: mx.events.KeyboardEvent):void{
+
+		}
+
+
+		]]>
+	</fx:Script>
+	<!--Missing CSS <fx:Style source="tak.css"/>-->
+	
+	<s:Rect left="0" height="20" width="100%" id="rect1"  top="10">
+		<s:fill>
+			<!--<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#ffffff">
+				</s:GradientEntry>
+				<s:GradientEntry color="#d5dde0">
+				</s:GradientEntry>
+			</s:LinearGradient>		-->
+			<mx:SolidColor color="#d5dde0"/>
+		</s:fill>
+	</s:Rect>
+	<s:Rect left="0" height="20" width="100%" id="rect2"  top="30">
+		<s:fill>
+			<!--<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#d5dde0">
+				</s:GradientEntry>
+				<s:GradientEntry color="#ffffff">
+				</s:GradientEntry>
+			</s:LinearGradient>-->
+			<mx:SolidColor color="#d5dde0"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Rect left="0" height="100%" width="100%" id="rect4"  top="87">
+		<s:fill>
+			<!--<s:LinearGradient rotation="45">
+				<s:GradientEntry color="#dbfaff">
+				</s:GradientEntry>
+				<s:GradientEntry color="#bfdfca">
+				</s:GradientEntry>
+			</s:LinearGradient>-->
+			<mx:SolidColor color="#dbfaff"/>
+		</s:fill>
+	</s:Rect>
+	<s:Rect left="0" height="7" width="100%" id="rect3"  top="80">
+		<s:fill>
+			<!--<s:LinearGradient>
+				<s:GradientEntry color="#43b794">
+				</s:GradientEntry>
+			</s:LinearGradient>-->
+			<mx:SolidColor color="#43b794"/>
+		</s:fill>
+	</s:Rect>	
+	
+	<s:Image x="0" y="0" source="jp/co/tak/view/img/imgHeaderlogo_bak.png"/>
+	<s:Image x="400" y="0" width="100%" source="jp/co/tak/view/img/imgHeaderlogobg_bak.png"  /><!-- fillMode="repeat" -->
+	<mx:MenuBar x="0" y="57" width="1920" height="24" chromeColor="#C2E3EB"/>	
+	<s:Scroller width="100%" height="100%">
+		<s:Group>
+			<s:BorderContainer x="2" y="87" width="1918" height="1113" backgroundColor="#ffffff" borderVisible="false">
+				<s:BorderContainer x="612" y="188" width="624" height="210"  backgroundImage="{imgBackObj}"><!-- backgroundImageFillMode="scale" -->
+					<s:Label x="136" y="18" fontSize="19" text="Flex Web Application" width="300" height="25" textAlign="center"/>
+					<s:Label x="121" y="69" width="86" fontSize="14" text="User ID:"/>
+					<s:Label x="121" y="99" width="87" height="22" fontSize="14" text="Role:"/>
+					<s:Label x="121" y="131" width="84" height="22" fontSize="14" textAlign="right" text="Password:"/>
+					<s:TextInput id="userName" x="215" y="64" width="289" height="26" text="" focusOut="userName_focusOutHandler(event)" enter="userName_enterHandler(event)"/><!-- imeMode="ALPHANUMERIC_HALF"  -->
+					<s:DropDownList id="roleNameList" x="215" y="100" width="289" height="25" labelField="value" requireSelection="true" dataProvider="{getRoles()}"/>
+					<s:TextInput id="userPassword" x="215" y="130" width="289" height="26" displayAsPassword="true" text="" /><!-- imeMode="ALPHANUMERIC_HALF"  -->
+					<s:Button id="loginBtn" x="230" y="177" width="82" height="26" label="Login"/>
+					<s:Button x="348" y="177" width="82" height="26" label="Clear" click="clear()" keyDown="button1_keyDownHandler(event)"/>
+					<s:TextInput id="userNameHid" x="231" y="64" width="199" height="26" text="" visible="false"/>
+					<s:Label id="version" x="552" y="194" width="67" fontSize="12" text="Ver 3.2.0"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+		</s:Group>
+	</s:Scroller>
+</s:NavigatorContent>

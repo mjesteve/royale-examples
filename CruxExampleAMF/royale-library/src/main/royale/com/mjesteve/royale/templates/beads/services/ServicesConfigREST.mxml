@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<crux:BeanProvider xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:crux="library://ns.apache.org/royale/crux"
+				xmlns:mx="library://ns.apache.org/royale/mx"
+				xmlns:lib="library://ns.mjesteve.com/royale/library">
+
+	<fx:Script>
+		<![CDATA[
+
+		//import mx.messaging.config.LoaderConfig;
+/*
+		override public function initialize():void
+		{
+			super.initialize(); 
+		}
+		
+		override public function generateMXMLAttributes(data:Array):void
+		{
+			LoaderConfig.init(null);
+			super.generateMXMLAttributes(data);
+		}*/
+		]]>
+	</fx:Script>
+
+	<!--<mx:RemoteObject id="WebApiTemplate"
+		destination="fluorine"
+		channelSet="{loginChannel}"
+	/>-->
+
+	<!--<mx:HTTPService id="configuratorService" url="project.json" resultFormat="text"/>
+                xmlns:basic="library://ns.apache.org/royale/basic"-->
+	<mx:HTTPService id="WebApiTemplate" resultFormat="text" rootURL="http://localhost:80/WebApiTemplate/api" url="Login"/>
+	<!--
+	<crux:Bean id="dynamicChannels">
+		<crux:source>
+			<fx:Array>
+				<lib:DynamicChannelSet id="loginChannel" />
+			</fx:Array>
+		</crux:source>
+	</crux:Bean>
+	-->
+
+</crux:BeanProvider>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:ResponsiveView xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:j="library://ns.apache.org/royale/jewel"
+    xmlns:js="library://ns.apache.org/royale/basic"
+    xmlns:html="library://ns.apache.org/royale/html"    
+	xmlns:lib="library://ns.mjesteve.com/royale/library"
+    xmlns:views="com.mjesteve.royale.templates.views.*" 
+    initComplete="onInitComplete()"
+    >
+
+     <fx:Script>
+        <![CDATA[
+
+        import org.apache.royale.net.HTTPConstants;
+        import org.apache.royale.net.HTTPService;
+        import org.apache.royale.net.URLVariables;
+        import org.apache.royale.net.events.ResultEvent;
+        import org.apache.royale.net.events.FaultEvent;
+        import org.apache.royale.crux.utils.event.EventHandler;
+        import com.mjesteve.royale.templates.events.LoginSignInEvent;
+        import com.mjesteve.royale.templates.events.DataEvent;
+        import com.mjesteve.royale.templates.models.AppModel;
+
+        [Bindable]
+        [Inject(source="appModel", required="true")]
+        public var appModel:AppModel;
+
+        [PostConstruct]
+        public function setUpCrux():void {                       
+           trace("AppModel Inject");             
+        }
+
+        private function onInitComplete():void{
+
+        }
+
+        
+        [EventHandler(event = "LoginSignInEvent.EVENT_COMPLETE_RES",scope="global")]            
+        public function loginComplete(event:LoginSignInEvent):void{
+            main.selectedContent = "datos_panel";
+            drawer.visible = true
+            hgButtonMenu.visible = true
+
+            dispatchEvent(new DataEvent(DataEvent.GET_COMPANIES))
+        }
+        
+        [EventHandler(event = "LoginSignInEvent.EVENT_FAILED_RES", scope="global")]            
+        public function loginFailed(event:LoginSignInEvent):void{
+            login_panel.loginError();
+        }
+        
+        private function dataReadyHandler(event:Event):void{
+            trace("dataReadyEvent")
+        } 
+
+        private function onDrawerChangeView(event:Event):void{
+            main.selectedContent = drawer.selectedPage
+        }
+
+        ]]>
+    </fx:Script>
+
+    <j:beads>
+		<js:ViewDataBinding/>
+		<js:BrowserResizeListener/>
+	</j:beads>
+    <views:DrawerMenu localId="drawer" data="{appModel.dtMenu}" visible="false" onChangeView="onDrawerChangeView(event)"/>
+
+    <j:TopAppBar localId="topappbar" fixed="true" visible="true">
+        <j:BarRow localId="barRowHeader">
+            <j:BarSection gap="0" percentWidth="100">
+                <j:HGroup localId="hgButtonMenu" visible="false">
+                    <j:IconButton localId="ibDisplayMenu" click="drawer.isOpen ? drawer.close() : drawer.open()" >
+                        <j:beads>
+                            <j:ResponsiveVisibility desktopVisible="false" wideScreenVisible="false" />
+                        </j:beads>
+                        <j:icon>
+                            <js:MaterialIcon text="{MaterialIconType.MENU}" />
+                        </j:icon>
+                    </j:IconButton>
+                </j:HGroup>
+                <j:BarTitle text="Jewel - Crux example into Apache Royale"/>                
+            </j:BarSection>
+        </j:BarRow>
+    </j:TopAppBar>
+    
+    <j:FooterBar localId="footerbar" fixed="true">
+        <j:BarRow>
+            <j:BarSection>
+                <j:Label text="RoyaleExamples© copyright mjesteve"/>
+            </j:BarSection>
+        </j:BarRow>
+    </j:FooterBar>
+
+    <j:ApplicationMainContent  localId="main" hasTopAppBar="true" hasFooterBar="true" selectedContent="login_panel">
+        <views:LoginForm localId="login_panel" name="login_panel"/>
+        <views:DataForm localId="datos_panel" name="data_panel"/>
+    </j:ApplicationMainContent>
+    
+
+</j:ResponsiveView>

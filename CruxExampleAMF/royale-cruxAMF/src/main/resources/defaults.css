@@ -1,0 +1,52 @@
+
+@namespace "http://www.w3.org/1999/xhtml";
+@namespace js "library://ns.apache.org/royale/basic";
+@namespace j "library://ns.apache.org/royale/jewel";
+
+  .Application {
+    font-family: 'Open Sans', serif, sans-serif;
+    color: #434343;
+  }
+  .jewel.application{
+    font-family: 'Open Sans', serif, sans-serif;
+    color: #333333;
+  }
+
+  .jewel.card .card-header{
+    border-bottom: 1px solid #d2dadf;
+  }
+
+  .jewel.card .card-actions{
+      border-top: 1px solid #d2dadf;
+  }
+
+  .jewel.label{
+    line-height: 1.2em;
+  }
+
+  .relative{
+    position: relative;
+    height: 100%;
+  }
+
+  .absolute{
+    position: absolute;
+    z-index: 1;
+  }
+
+  .center{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .navigation-section-title.jewel.label {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  .navigation-section-group .navigationlink {
+    padding-left: 34px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }

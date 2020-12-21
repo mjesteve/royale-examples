@@ -1,0 +1,49 @@
+/*
+ * https://github.com/BowlerHatLLC/vscode-as3mxml/wiki/asconfig.json#library-path
+ */
+ {
+    "config": "royale",
+    "type": "lib",
+    "compilerOptions": {
+        "debug": true,
+        "targets": [
+            // "SWF",
+            "JSRoyale"
+        ],
+        "namespace": [
+            {
+                "uri": "library://ns.mjesteve.com/royale/library",
+                "manifest": "src/main/resources/library-manifest.xml"
+            }
+        ],
+        "library-path": [
+			"${royalelib}/js/libs/Basic-0.9.8-SNAPSHOT-js.swc",
+            "${royalelib}/js/libs/MXRoyale-0.9.8-SNAPSHOT-js.swc"
+        ],
+        "js-library-path": [
+			"${royalelib}/js/libs/Basic-0.9.8-SNAPSHOT-js.swc",
+            "${royalelib}/js/libs/MXRoyale-0.9.8-SNAPSHOT-js.swc"
+        ],
+        "define": [
+            {
+                "name": "COMPILE::JS",
+                "value": true
+            },
+            {
+                "name": "COMPILE::SWF",
+                "value": false
+            }
+        ],
+        "source-path": [
+            "src/main/royale"
+        ],
+        "include-classes": [
+            "src/main/royale/LibraryClasses.as"
+        ],
+        "include-sources": [
+            "src/main/royale"
+        ],
+        "source-map": true,
+        "output": "target/royale-library-1.0-SNAPSHOT-js.swc"
+    }
+}

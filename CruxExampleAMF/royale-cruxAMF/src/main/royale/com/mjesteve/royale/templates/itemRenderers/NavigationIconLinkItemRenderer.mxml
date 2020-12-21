@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:CollapsibleNavigationSectionRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+                                        xmlns:j="library://ns.apache.org/royale/jewel"
+                                        xmlns:js="library://ns.apache.org/royale/basic"
+                                        xmlns:html="library://ns.apache.org/royale/html"
+                                        className="{open ? 'openedOptionMenu selectable jewel navigationgroup primary itemsCentered layout vertical' :
+                                        'closedOptionMenu selectable jewel navigationgroup primary itemsCentered layout vertical'}"
+                                        sectionClick="handleNavToggle(event)">
+
+    <fx:Script>
+		<![CDATA[
+        import org.apache.royale.events.Event;
+        import org.apache.royale.jewel.Navigation;
+        import com.mjesteve.royale.templates.vos.NavigationLinkVO;
+        
+        private var firstDraw:Boolean = false;
+        [Bindable(event="dataChange")]
+        public function get navlink():NavigationLinkVO
+        {   
+            return data as NavigationLinkVO;
+        }
+
+        public function get childNav():Navigation{
+            return childNavigation;
+        }
+       
+        //probably don't want this for touch interfaces...
+        override public function get retainHover():Boolean{
+            return true;
+        }
+        private function handleNavToggle(event:Event):void{
+            var triggerBinding:Boolean;
+            if (event.target == this){                
+                this.open = !this.open;
+                for(var i:Number=0;i<(event.target.parent as Navigation).numElements;i++){
+                    if(event.target.parent.$getElementAt(i) != event.target){
+                        event.target.parent.$getElementAt(i).open = false;
+                    }
+                }
+                //trigger the binding because ItemRendererDataBinding only listens to dataChange
+                triggerBinding = true;
+            }
+            if (triggerBinding) dispatchEvent(new Event('dataChange'));
+        }
+         override public function onChange(selectedItem:Object):void{
+            trace('selectedItem',selectedItem)
+            var parentNav:Navigation = this.itemRendererOwnerView ? this.itemRendererOwnerView.host as Navigation : null;
+            if (parentNav) {
+                //this hierarchy support is a bit kooky, and probably there will be something better later with Hierarchical data setup
+                navlink.selectedChild =selectedItem as NavigationLinkVO;
+                if (parentNav.selectedItem!= this.data){
+                    parentNav.selectedItem = this.data;
+                }
+                parentNav.dispatchEvent(new Event('change'));
+            }
+        }
+        
+        ]]>
+	</fx:Script>
+
+    <j:beads>
+        <js:ItemRendererDataBinding />
+    </j:beads>
+    <j:HGroup itemsVerticalAlign="itemsCenter" height="36">
+
+    <j:Label className="navigation-section-title" text="{navlink.label}"/>
+    
+    <js:MaterialIcon text="{open? MaterialIconType.EXPAND_MORE: MaterialIconType.CHEVRON_RIGHT}"  size="36" className="expandIcon" visible="{data.subMenu}"/>
+
+    </j:HGroup>
+
+</j:CollapsibleNavigationSectionRenderer>

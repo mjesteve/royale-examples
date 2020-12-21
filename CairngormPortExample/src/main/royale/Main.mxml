@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:mx="library://ns.apache.org/royale/mx"
+			   xmlns:s="library://ns.apache.org/royale/spark"
+			   xmlns:js="library://ns.apache.org/royale/basic"
+			   xmlns:crux="library://ns.apache.org/royale/crux"
+			   xmlns:control="jp.co.tak.control.*"
+			   xmlns:business="jp.co.tak.business.*"
+			   xmlns:model="jp.co.tak.model.*"
+			   minWidth="955" minHeight="600"
+			   xmlns:view="jp.co.tak.view.*" >
+	<!--<fx:Declarations>
+		<control:LoginController/>
+	</fx:Declarations>-->
+	
+	<!--<fx:Style source="tak.css"/>-->
+	<s:beads>
+		<js:ExtraReflectionDataBead/>
+		<js:ReflectionCacheEnabledBead/>
+		<!-- support for simulated stage events in javascript (needed for Crux view processing)-->
+		<!-- packageExclusionFilter="_default_" avoids dispatching events for royale framework classes.
+			 we can expect they will not have Crux metadata tags in any of them, so we would only avoid this
+			 if we needed to use stage-like events for other reasons to emulate flash outside Crux...
+			 -->
+		<crux:JSStageEvents packageExclusionFilter="_default_"/>
+		<crux:Crux>
+			<!-- BeanProviders simply contain the non-display objects that Crux should process. -->
+			<crux:beanProviders>
+				<!-- an imported beanProvider (mxml based subclass) -->
+				<business:Services/>
+				<!-- an imported beanProvider (mxml based subclass) -->
+				<model:CruxModelConfig/>
+				<!-- an inline beanProvider -->
+				<crux:BeanProvider>
+					<control:LoginController/>
+				</crux:BeanProvider>
+			</crux:beanProviders>
+
+			<crux:config>
+				<crux:CruxConfig>
+					<crux:eventPackages>
+						<fx:Array>
+							<fx:String>jp.co.tak.event.*</fx:String>
+						</fx:Array>
+					</crux:eventPackages>
+					<crux:viewPackages>
+						<fx:Array>
+							<fx:String>jp.co.tak.view.*</fx:String>
+						</fx:Array>
+					</crux:viewPackages>
+				</crux:CruxConfig>
+			</crux:config>
+		</crux:Crux>
+	</s:beads>
+	<fx:Script>
+		<![CDATA[
+
+			import mx.collections.ArrayCollection;
+			
+			public var userName:String;
+			public var userId:String;
+			public var roleName:String;
+			public var headerViewControl:ArrayCollection;
+			
+			public function setLoginUserName(userName:String):void
+			{
+				this.userName = userName;
+			}
+			
+			public function setHeaderViewControl(headerViewControl:ArrayCollection):void
+			{
+				this.headerViewControl = headerViewControl;
+			}			
+
+		]]>
+	</fx:Script>
+			<mx:ViewStack id = "pages" width="100%" height="100%">
+				<view:Login id="login"/>
+			</mx:ViewStack>
+
+	<!--<ns:MDICanvas id="mdiCanvas" width="100%" height="100%"/>-->
+</s:Application>
