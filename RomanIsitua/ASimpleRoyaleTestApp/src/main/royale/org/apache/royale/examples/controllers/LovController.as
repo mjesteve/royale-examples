@@ -18,6 +18,7 @@ package org.apache.royale.examples.controllers
     /**
 		 *  Common todo model
 		 */		
+		  [Bindable]
       [Inject(source="lovModel", required="true")]     
       public var model:LovModel2;
 
@@ -38,8 +39,8 @@ package org.apache.royale.examples.controllers
        *  In this example, we set up a default user after the bean is created.
        */
       [PostConstruct]
-      public function fetchLovs():void {
-			  trace(' -- [PostConstruct] fetch lovs country prefix  -- ');
+      public function sepUpCrux():void {
+			  trace(' -- [PostConstruct] LovController  -- ');
       }
 
       public function LovController()
@@ -50,6 +51,22 @@ package org.apache.royale.examples.controllers
 		  [EventHandler(event="LovEvent.GET_LIST_VALUES", properties="lovName", scope = "global")]
       public function addTodoItem(lovName:String):void 
       {
+        if(lovName == "")
+        {
+            //Test data binding model
+            var ar:Array = new Array();
+            for(var idx:int = 0; idx<10; idx++)
+            {
+              var it:GenericLOV = new GenericLOV();
+              it.code = idx;
+              it.description = "Desc. "+idx.toString();
+              ar.push(it);
+            }
+            model.lovs2 = new ArrayList(ar);
+            
+            setTimeout(responseTest,250);
+
+        }else
           serviceHelper.executeServiceCall(delegate.getListOfValues(lovName), handleLovFetchResult, handleLovFetchFault);
 
       }
@@ -72,6 +89,11 @@ package org.apache.royale.examples.controllers
         trace(" lovs returned: " + genericLovs.length);
 
         model.lovs2 = toArray(genericLovs);
+        responseTest();
+      }
+
+      private function responseTest():void
+      {
 
         var evt:LovEvent = new LovEvent(LovEvent.GET_LIST_VALUES_RESPONSE);
         evt.result = "Get list ok. " + model.lovs2.length.toString() + "regs.";

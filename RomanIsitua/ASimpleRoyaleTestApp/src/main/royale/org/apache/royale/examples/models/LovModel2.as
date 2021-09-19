@@ -1,13 +1,6 @@
 package org.apache.royale.examples.models
 {
-
-    import mx.rpc.remoting.mxml.RemoteObject;
-   import org.apache.royale.crux.utils.services.ServiceHelper;
-   import mx.rpc.events.ResultEvent;
-   import mx.rpc.events.FaultEvent;
-   import mx.collections.ArrayCollection;
    import org.apache.royale.collections.ArrayList;
-   import org.apache.royale.examples.dto.GenericLOV;
    import org.apache.royale.events.Event;
 	import org.apache.royale.core.IBeadModel;
 	import org.apache.royale.core.IStrand;

@@ -23,10 +23,7 @@ limitations under the License.
             xmlns:crux="library://ns.apache.org/royale/crux"
             xmlns:config="org.apache.royale.examples.config.*"
             xmlns:views="org.apache.royale.examples.views.*"
-            xmlns:services="org.apache.royale.examples.services.*"
-            xmlns:models="org.apache.royale.examples.models.*"
-            xmlns:controllers="org.apache.royale.examples.controllers.*"
-            initialize="setUp;initApp(event);">
+            initialize="setUp(); initApp(event);">
 
     <!-- <fx:Style source="../../main/resources/default.css"/> -->
     <fx:Script>
@@ -45,9 +42,6 @@ limitations under the License.
         {
             trace("  -- initApp -- ");
 
-        
-        
-
             trace(" -- end of init app -- ");
         }
 
@@ -65,14 +59,8 @@ limitations under the License.
             <crux:beanProviders>
 				<!-- an imported beanProvider (mxml based subclass) -->
                 <config:Beans/>
-				<!--We can repeat this structure 'crux:BeanProvider' to define new models / controllers 
-				<crux:BeanProvider>
-					<models:LovModel2 id="lovModel"/>
-					<services:LovBO id="lovBO"/>
-					<controllers:LovController id="lovController"/>
-				</crux:BeanProvider>    -->
             </crux:beanProviders>
-
+<!-- 
 			<crux:config>
 				<crux:CruxConfig>
 					<crux:eventPackages>
@@ -87,7 +75,12 @@ limitations under the License.
 					</crux:viewPackages>
 				</crux:CruxConfig>
 			</crux:config>
-
+ -->
+            <crux:config>
+                <crux:CruxConfig
+                    eventPackages="org.apache.royale.examples.events.*"
+                    viewPackages="org.apache.royale.examples.views.*"/>
+            </crux:config>
         </crux:Crux>
 	</j:beads>
 

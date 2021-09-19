@@ -51,10 +51,11 @@ limitations under the License.
       import org.apache.royale.examples.models.LovModel2;
       import org.apache.royale.examples.events.LovEvent;
       import org.apache.royale.jewel.Snackbar;
+      import org.apache.royale.examples.dto.GenericLOV;
 
 
       [Bindable] 
-      [Inject( source = "lovModel", required="true" )]     
+      [Inject( source = "lovModel", bind = "true")]     
       public var lovModel:LovModel2;
 
       public var selectEstatePopup:PopUp;
@@ -63,6 +64,17 @@ limitations under the License.
       public function setUpCrux():void 
       {
             trace('Inject model crux');
+            
+            var ar:Array = new Array();
+            for(var idx:int = 0; idx<10; idx++)
+            {
+              var it:GenericLOV = new GenericLOV();
+              it.code = idx;
+              it.description = "Desc. "+idx.toString();
+              ar.push(it);
+            }
+            lovModel.lovs2 = new ArrayList(ar);
+
       }
 
 /*
@@ -102,7 +114,9 @@ limitations under the License.
           {
             trace(' -- sign up -- ');
             //Example launge get...
-            dispatchEvent( new LovEvent(LovEvent.GET_LIST_VALUES,"phoneCountryPrefix") );
+            //dispatchEvent( new LovEvent(LovEvent.GET_LIST_VALUES,"phoneCountryPrefix") );
+            //The correct line is the top . The next line is only a test to verify the mvc-flow and binding.
+            dispatchEvent( new LovEvent(LovEvent.GET_LIST_VALUES,"") );
           }
           else if(currentState == 'login')
           {

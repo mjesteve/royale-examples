@@ -24,30 +24,12 @@ limitations under the License.
     xmlns:services="org.apache.royale.examples.services.*"
     xmlns:models="org.apache.royale.examples.models.*"
     xmlns:controllers="org.apache.royale.examples.controllers.*">
-
-	<fx:Script>
-		<![CDATA[
-		import mx.messaging.config.LoaderConfig;
-		
-		override public function generateMXMLAttributes(data:Array):void
-		{
-			LoaderConfig.init(null);
-			super.generateMXMLAttributes(data);
-		}
-
-		override public function initialize():void{
-			super.initialize(); 
-		}
-		]]>
-	</fx:Script>
-	
-    <!-- Add beans -->
-    <!-- <mx:HTTPService id="service"/> -->
-    
+	    
                     <!-- endpoint="http://localhost:8080/messagebroker/websocket-amf" -->
     <mx:RemoteObject id="lovService"
                     endpoint="http://132.145.63.111:8080/messagebroker/websocket-amf"
                     destination="genericLovService">
+
         <mx:method name="getListOfValues"></mx:method> 
         <!--  <mx:method name="newContact">
             <mx:arguments>
@@ -57,7 +39,7 @@ limitations under the License.
     </mx:RemoteObject>
 <!--  -->
     <models:LovModel2 id="lovModel"/>
-    <services:LovBO id="lovBO"/>
     <controllers:LovController id="lovController"/>
+    <services:LovBO id="lovBO"/>
 
 </crux:BeanProvider>
