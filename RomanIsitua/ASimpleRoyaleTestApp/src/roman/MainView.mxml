@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<j:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:j="library://ns.apache.org/royale/jewel"
+    xmlns:js="library://ns.apache.org/royale/basic"
+    xmlns:html="library://ns.apache.org/royale/html"  
+    initComplete="initCompleteHandler(event)"
+    xmlns:views="com.spacio.fm.client2.views.*"
+    >
+
+    <j:beads>
+        <js:SimpleStatesImpl/>  
+        <js:ViewDataBinding/>
+     <!-- <js:ContainerDataBinding/> -->
+    </j:beads>
+
+       <j:states>
+              <js:State name="joinus" />
+              <js:State name="registerFM" />        
+              <js:State name="loggedIn" />        
+       </j:states>
+
+     <!-- xmlns:binding="org.apache.royale.binding.*"  xmlns:models="com.spacio.fm.client2.model.*"  xmlns:models="com.spacio.fm.client2.service.*"
+     
+       <fx:Script source="MainBean.as">      
+       </fx:Script> -->
+        <fx:Script>
+             <![CDATA[
+                      import org.apache.royale.jewel.PopUp;
+                       import org.apache.royale.events.CloseEvent;
+                     import org.apache.royale.jewel.Button;  
+                     import org.apache.royale.events.MouseEvent;                    
+                     import org.apache.royale.collections.ArrayList;
+                
+
+                   /**
+     * variables
+     */
+    
+    // [Bindable] 
+   //   [Inject( source = "lovBO", bind = "true" )]     
+    //  public var lovModel : LovBO;
+
+     
+    // [Inject] 
+    // [Inject( source = "lovModel2", bind = "true" )]     
+   //  [Bindable]    
+   // public var lovModel2 : LovModel2;
+   // [Inject( source = "lovController.genericLovs", bind = "true" )]  
+
+   
+  //   [Inject( source = "lovController.lovBO._lovs2", bind = "true" )]  
+     [Bindable] 
+      public var genericLovs:ArrayList;
+
+    public var selectEstatePopup:PopUp;
+
+      //example of setter style binding Injection
+        [Inject( source = "lovController.lovBO._lovs2", bind = "true" )]  
+        public function setGenericLovs(val:ArrayList):void
+        {
+             trace("injected lov array list. hurray !! ");
+
+            this.genericLovs = val;
+
+            trace(" generic lov has been set ! ");
+        }
+
+    public function initCompleteHandler(event:Event):void
+    {
+          trace("Main ResponsiveView is ready !!! ");
+
+          trace(" set initial current state to join us ..");
+         
+           currentState = 'joinus';       
+
+           trace("  currentState: " + currentState);
+
+          // loginForm.mainView = mainView;
+
+   }
+     
+
+    public function signIn(event:Event):void
+    {
+         trace(' -- sign in -- ');
+         currentState = 'login';
+    }
+
+
+    public function signUp(event:Event):void
+    {
+          trace(' -- sign up -- ');
+         currentState = 'joinus';
+    }
+
+
+    public function registerFM(event:Event):void
+    {
+          trace(' -- registerFM -- ');
+         currentState = 'registerFM';
+    }
+   
+
+    public function selectEstate(event:Event):void
+    {
+          trace(' -- selectEstate -- ');
+       //--  currentState = 'registerFM';
+
+        //estateDialog.show();
+
+        /**
+              var alert:Alert = Alert.show("Do you want to <b>save</b> your changes?", "Save Changes", 3);
+				alert.addEventListener(CloseEvent.CLOSE, alertClickHandler);
+         */
+
+     /*  var selectEstateDialog:SelectEstateDialog = SelectEstateDialog.show(null,'Select Estate'); */
+       
+        var selectEstateDialog:SelectEstateDialog = new SelectEstateDialog();
+        selectEstateDialog.width = 490;
+	  selectEstateDialog.height = 392;
+
+        selectEstatePopup = new PopUp();
+	     selectEstatePopup.content = selectEstateDialog;
+
+     /*   var closeButton:Button = new Button();
+       closeButton.addEventListener(MouseEvent.CLICK,closeEstateDialog);
+      // closeButton
+       selectEstatePopup.addElement(closeButton); */
+
+       selectEstatePopup.addEventListener(CloseEvent.CLOSE, closePopUpHandler);
+    
+	    addElement(selectEstatePopup);
+
+       selectEstatePopup.open = true;
+
+    }
+
+     private function closeEstateDialog(event:MouseEvent):void
+     {
+          trace(" close estate pop up ");
+
+          selectEstatePopup.open = false;
+     }
+
+               public function closePopUpHandler(event:Event):void
+	       	{
+	          	//	trace("[closePopUp] ", event.target, popup1.content);
+            //  trace("[closePopUp] ", event.target, this.content);
+                 
+
+                      trace("[closePopUp] ", event.target, selectEstatePopup.content);
+                   
+                    // selectEstatePopup.open = false;
+	      	}
+
+                  ]]>
+      </fx:Script>
+
+  <!-- <j:model>     
+          <models:LovModel2 id="lovModel"/>          
+    </j:model>
+-->
+   
+    
+  <!--   <j:VGroup> -->
+      <!--   <j:Label text="Hello Jewel + Crux!"/>
+        <j:ModuleLoader localId="moduleLoader" modulePath="modules" moduleName="admin"/> -->
+
+         <j:Card x="300" y="60" height="80%" includeIn="joinus">
+             <html:H3 text="Join Us !"></html:H3>
+             <html:H6 text="Welcome to Spacio, to begin this journey, tell us what type of account you opening."></html:H6>      
+             <j:Button text="Resident"></j:Button>
+             <j:Button text="Facility Manager" click="registerFM(event)"></j:Button>
+        </j:Card>
+
+
+        <j:Card x="300" y="30" height="90%" includeIn="registerFM">
+            <html:H3 text="Let's Get Started !"></html:H3>
+            <html:H6 text="For the purpose of industry regulations this details are required."></html:H6>              
+           <j:Label text="Your Full Name*"></j:Label>
+           <j:TextInput id="fullName" text="">
+           </j:TextInput>
+           <j:Label text="Phone Number"></j:Label>
+            <j:HGroup>
+              <j:DropDownList id="phoneCountryPrefix" width="30%" labelField="description" dataProvider="{genericLovs}">               
+                <!--  <j:beads>
+                  <binding:SimpleBinding
+                          sourceID="lovModel"
+                          sourcePropertyName="lov2"
+                          destinationPropertyName="dataProvider"                         
+                          eventName="lovsChanged" />                 
+              </j:beads> -->
+              </j:DropDownList>
+              <j:TextInput id="phoneNo" text="">
+              </j:TextInput>
+           </j:HGroup>
+           <j:Label text="Company Email Address*"></j:Label>
+           <j:TextInput id="compEmail" text=""></j:TextInput>
+           <j:Label text="Create Password*"></j:Label>
+           <j:TextInput id="createPass" text="">
+              <j:beads>
+                 <j:PasswordInput/>
+              </j:beads>
+           </j:TextInput>
+           <j:Label text="Confirm Password*"></j:Label>
+           <j:TextInput id="confirmPass" text="">
+              <j:beads>
+                 <j:PasswordInput/>
+              </j:beads>
+           </j:TextInput>
+           <j:Label text="Primary Estate/Facility"></j:Label>
+              <j:DropDownList click="selectEstate(event)">                
+              </j:DropDownList>
+           <j:Button text="Register Account"></j:Button>
+        </j:Card>
+
+
+</j:View>
