@@ -23,19 +23,19 @@ limitations under the License.
             xmlns:crux="library://ns.apache.org/royale/crux"
             xmlns:config="org.apache.royale.examples.config.*"
             xmlns:views="org.apache.royale.examples.views.*"
-            initialize="setUp();">
+            initialize="setUp()">
 
     <fx:Style source="../../main/resources/default.css"/>
     <fx:Script>
     <![CDATA[
         
-        //import org.apache.royale.reflection.registerClassAlias;
-        //import org.apache.royale.collections.ArrayList;
+        import org.apache.royale.reflection.registerClassAlias;
+        import org.apache.royale.collections.ArrayList;
 
         public function setUp():void 
         {
             trace('application setUp stub');
-			//registerClassAlias("flex.messaging.io.ArrayCollection", ArrayList);
+			registerClassAlias("flex.messaging.io.ArrayCollection", ArrayList);
         }
 
     ]]>

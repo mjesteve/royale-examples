@@ -13,20 +13,20 @@
   </fx:Script> -->
   <fx:Script>
     <![CDATA[
-      import org.apache.royale.jewel.PopUp;
-      import org.apache.royale.events.CloseEvent;
-      import org.apache.royale.jewel.Button;
-      import org.apache.royale.events.MouseEvent;
       import org.apache.royale.collections.ArrayList;
       import org.apache.royale.examples.models.LovModel2;
       import org.apache.royale.examples.events.LovEvent;
-      import org.apache.royale.jewel.Snackbar;
       import org.apache.royale.examples.dto.GenericLOV;
 
 
       [Bindable] 
+      private var lovModel:LovModel2;
+      
       [Inject(source="lovModel",required="true")]
-      public var lovModel:LovModel2;
+      public function setModel(value:LovModel2):void
+      {
+        lovModel = value;
+      }
 
       [PostConstruct]
       public function setUpCrux():void

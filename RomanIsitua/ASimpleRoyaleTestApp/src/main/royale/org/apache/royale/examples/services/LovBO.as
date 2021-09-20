@@ -3,7 +3,6 @@ package org.apache.royale.examples.services
  
     import mx.rpc.remoting.RemoteObject;
 	import mx.rpc.AsyncToken;
-    import org.apache.royale.events.IEventDispatcher;
 
   	public class LovBO
 	{

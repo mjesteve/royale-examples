@@ -21,6 +21,7 @@ package org.apache.royale.examples.models
 
     private var _lovs:Array = new Array();
     [ArrayElementType("org.apache.royale.examples.dto.GenericLOV")]
+    [Bindable(event="lovsChanged")]        
     public function get lovs():Array{ return _lovs; }
     public function set lovs(value:Array):void
     { 
@@ -31,6 +32,7 @@ package org.apache.royale.examples.models
 
     public var _lovs2:ArrayList = new ArrayList();
     [ArrayElementType("org.apache.royale.examples.dto.GenericLOV")]
+    [Bindable(event="lovs2Changed")]        
     public function get lovs2():ArrayList{ return _lovs2; }
     public function set lovs2(value:ArrayList):void
     { 
