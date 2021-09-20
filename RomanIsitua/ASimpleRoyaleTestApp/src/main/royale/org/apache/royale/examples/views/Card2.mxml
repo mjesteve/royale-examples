@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:Card xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:j="library://ns.apache.org/royale/jewel"
+        xmlns:js="library://ns.apache.org/royale/basic"
+        xmlns:html="library://ns.apache.org/royale/html"
+        x="300" y="60" height="80%">
+
+    <fx:Metadata>
+        [Event(name="selectEstate", type="org.apache.royale.events.Event")]
+    </fx:Metadata>
+
+  <fx:Script>
+    <![CDATA[
+      import org.apache.royale.jewel.PopUp;
+      import org.apache.royale.events.CloseEvent;
+      import org.apache.royale.jewel.Button;
+      import org.apache.royale.events.MouseEvent;
+      import org.apache.royale.collections.ArrayList;
+      import org.apache.royale.examples.models.LovModel2;
+      import org.apache.royale.examples.events.LovEvent;
+      import org.apache.royale.jewel.Snackbar;
+      import org.apache.royale.examples.dto.GenericLOV;
+
+
+      [Bindable] 
+      [Inject(source="lovModel",required="true")]
+      public var lovModel:LovModel2;
+
+      [PostConstruct]
+      public function setUpCrux():void
+      {
+            trace('Card2 Inject model crux');
+      }
+
+
+    ]]>
+  </fx:Script>
+
+  <j:beads>
+    <js:ContainerDataBinding/>
+  </j:beads>
+    <html:H3 text="Let's Get Started !">
+    </html:H3>
+    <html:H6 text="For the purpose of industry regulations this details are required.">
+    </html:H6>
+    <j:Label text="Your Full Name*">
+    </j:Label>
+    <j:TextInput id="fullName"
+                 text="">
+    </j:TextInput>
+    <j:Label text="Phone Number">
+    </j:Label>
+    <j:HGroup>
+      <j:DropDownList id="phoneCountryPrefix"
+                      width="30%"
+                      labelField="description"
+                      dataProvider="{lovModel.lovs2}">
+        <!--  <j:beads>
+        <binding:SimpleBinding
+        sourceID="lovModel"
+        sourcePropertyName="lov2"
+        destinationPropertyName="dataProvider"
+        eventName="lovsChanged" />
+        </j:beads> -->
+      </j:DropDownList>
+      <j:TextInput id="phoneNo"
+                   text="">
+      </j:TextInput>
+    </j:HGroup>
+    <j:Label text="Company Email Address*">
+    </j:Label>
+    <j:TextInput id="compEmail"
+                 text="">
+    </j:TextInput>
+    <j:Label text="Create Password*">
+    </j:Label>
+    <j:TextInput id="createPass"
+                 text="">
+      <j:beads>
+        <j:PasswordInput/>
+      </j:beads>
+    </j:TextInput>
+    <j:Label text="Confirm Password*">
+    </j:Label>
+    <j:TextInput id="confirmPass"
+                 text="">
+      <j:beads>
+        <j:PasswordInput/>
+      </j:beads>
+    </j:TextInput>
+    <j:Label text="Primary Estate/Facility">
+    </j:Label>
+    <j:DropDownList click="dispatchEvent(new Event('selectEstate'))">
+    </j:DropDownList>
+    <j:Button text="Register Account">
+    </j:Button>
+
+</j:Card>

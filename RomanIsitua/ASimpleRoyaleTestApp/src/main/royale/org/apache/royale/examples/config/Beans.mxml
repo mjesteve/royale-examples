@@ -37,7 +37,17 @@ limitations under the License.
             </mx:arguments> 
         </mx:method> -->
     </mx:RemoteObject>
-<!--  -->
+<!-- 
+
+	<crux:Bean id="lovBean">
+		<crux:source>
+			<fx:Array>
+                <models:LovModel2 id="lovModel"/>
+                <controllers:LovController id="lovController"/>
+                <services:LovBO id="lovBO"/>
+			</fx:Array>
+		</crux:source>
+	</crux:Bean> -->
     <models:LovModel2 id="lovModel"/>
     <controllers:LovController id="lovController"/>
     <services:LovBO id="lovBO"/>

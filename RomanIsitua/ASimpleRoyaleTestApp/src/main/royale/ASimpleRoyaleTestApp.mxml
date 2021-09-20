@@ -23,9 +23,9 @@ limitations under the License.
             xmlns:crux="library://ns.apache.org/royale/crux"
             xmlns:config="org.apache.royale.examples.config.*"
             xmlns:views="org.apache.royale.examples.views.*"
-            initialize="setUp(); initApp(event);">
+            initialize="setUp();">
 
-    <!-- <fx:Style source="../../main/resources/default.css"/> -->
+    <fx:Style source="../../main/resources/default.css"/>
     <fx:Script>
     <![CDATA[
         
@@ -37,20 +37,10 @@ limitations under the License.
             trace('application setUp stub');
 			//registerClassAlias("flex.messaging.io.ArrayCollection", ArrayList);
         }
-        
-        private function initApp(event:Event): void
-        {
-            trace("  -- initApp -- ");
-
-            trace(" -- end of init app -- ");
-        }
 
     ]]>
     </fx:Script>
 
-    <j:valuesImpl>
-        <js:SimpleCSSValuesImpl />
-    </j:valuesImpl>
     <j:beads>
         <js:ClassAliasBead />  
 		<crux:JSStageEvents packageExclusionFilter="_default_"/>
@@ -60,7 +50,6 @@ limitations under the License.
 				<!-- an imported beanProvider (mxml based subclass) -->
                 <config:Beans/>
             </crux:beanProviders>
-<!-- 
 			<crux:config>
 				<crux:CruxConfig>
 					<crux:eventPackages>
@@ -75,17 +64,18 @@ limitations under the License.
 					</crux:viewPackages>
 				</crux:CruxConfig>
 			</crux:config>
- -->
+<!-- 
             <crux:config>
                 <crux:CruxConfig
                     eventPackages="org.apache.royale.examples.events.*"
                     viewPackages="org.apache.royale.examples.views.*"/>
             </crux:config>
+ -->
         </crux:Crux>
 	</j:beads>
 
     <j:initialView>
-        <views:MainView width="100%" height="100%"/>
+        <views:MainView2 width="100%" height="100%"/>
     </j:initialView>
     
 </j:Application>

@@ -7,20 +7,15 @@ package org.apache.royale.examples.services
 
   	public class LovBO
 	{
-        [Dispatcher]
-        /**
-         * The [Dispatcher] metadata tag instructs Crux to inject an event dispatcher.
-         * Event's dispatched via this dispatcher can trigger event mediators.
-         */
-        public var dispatcher:IEventDispatcher;
-   		 /**
-		 * Constructor.
-		 */
-		public function LovBO()	{	}
 		/**
 		 * @royalesuppresspublicvarwarning
 		 */
    		 public var service:RemoteObject;
+			
+   		 /**
+		 * Constructor.
+		 */
+		public function LovBO()	{	}
 
 		[Inject(source="lovService", required="true")]
 		public function setService(value:RemoteObject):void{

@@ -11,8 +11,10 @@ package org.apache.royale.examples.controllers
   import mx.rpc.events.FaultEvent;
   import org.apache.royale.examples.events.LovEvent;
   import org.apache.royale.events.IEventDispatcher;
+  import org.apache.royale.events.EventDispatcher;
+  import org.apache.royale.core.IBeadController;
 
-  public class LovController 
+  public class LovController
 	{
     
     /**

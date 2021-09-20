@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:ResponsiveView xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:j="library://ns.apache.org/royale/jewel"
+        xmlns:js="library://ns.apache.org/royale/basic"
+        xmlns:html="library://ns.apache.org/royale/html"
+        xmlns:views="org.apache.royale.examples.views.*"
+        initComplete="initCompleteHandler(event)"
+        stateChangeComplete="changeState(event)">
+
+  <!-- xmlns:binding="org.apache.royale.binding.*"  xmlns:models="org.apache.royale.examples.model.*"  xmlns:models="org.apache.royale.examples.service.*"
+
+  <fx:Script source="MainBean.as">
+  </fx:Script> -->
+  <fx:Script>
+    <![CDATA[
+      import org.apache.royale.jewel.PopUp;
+      import org.apache.royale.events.CloseEvent;
+      import org.apache.royale.jewel.Button;
+      import org.apache.royale.events.MouseEvent;
+      import org.apache.royale.collections.ArrayList;
+      import org.apache.royale.examples.models.LovModel2;
+      import org.apache.royale.examples.events.LovEvent;
+      import org.apache.royale.jewel.Snackbar;
+      import org.apache.royale.examples.dto.GenericLOV;
+
+
+      [Bindable] 
+      [Inject(source="lovModel",required="true")]
+      public var lovModel:LovModel2;
+
+      [PostConstruct]
+      public function setUpCrux():void
+      {
+            trace('Inject model crux');
+            
+            var ar:Array = new Array();
+            for(var idx:int = 0; idx<10; idx++)
+            {
+              var it:GenericLOV = new GenericLOV();
+              it.code = idx;
+              it.description = "Desc. "+idx.toString();
+              ar.push(it);
+            }
+            lovModel.lovs2 = new ArrayList(ar);
+
+      }
+
+      public function initCompleteHandler(event:Event):void
+      {
+        trace("Main ResponsiveView is ready !!! ");
+        currentState='joinus';
+      }
+
+      public function changeState(event:Event):void
+      {
+          //actions
+          if(currentState == 'joinus')
+          {
+            trace(' -- sign up -- ');
+            main.selectedContent="card1";
+            dispatchEvent( new LovEvent(LovEvent.GET_LIST_VALUES,"") );
+          }
+          else if(currentState == 'login')
+          {
+            trace(' -- sign in -- ');
+          }
+          else if(currentState == 'registerFM')
+          {
+            trace(' -- registerFM -- ');
+            main.selectedContent="card2";
+            
+          }
+
+      }
+
+      public function signIn(event:Event):void
+      {
+        currentState='login';
+      }
+
+      public function signUp(event:Event):void
+      {
+        currentState='joinus';
+      }
+
+      public function registerFM(event:Event):void
+      {
+        currentState='registerFM';
+      }
+    ]]>
+  </fx:Script>
+
+  <j:beads>
+    <js:SimpleStatesImpl/>
+    <js:ViewDataBinding/>
+    <!-- <js:ContainerDataBinding/> -->
+  </j:beads>
+
+  <j:states>
+    <js:State name="joinus"/>
+    <js:State name="registerFM"/>
+    <js:State name="loggedIn"/>
+  </j:states>
+
+  <j:ApplicationMainContent localId="main" >
+    <j:SectionContent  name="card1">
+      <views:Card1 localId="card1" x="300" y="60" height="80%" registerFM="registerFM(event)"/>
+    </j:SectionContent>
+    <j:SectionContent  name="card2">
+      <views:Card2 localId="card2" x="300" y="30" height="90%"/>
+    </j:SectionContent>
+  </j:ApplicationMainContent>
+
+</j:ResponsiveView>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:Card xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:j="library://ns.apache.org/royale/jewel"
+        xmlns:js="library://ns.apache.org/royale/basic"
+        xmlns:html="library://ns.apache.org/royale/html">
+
+    <fx:Metadata>
+        [Event(name="registerFM", type="org.apache.royale.events.Event")]
+    </fx:Metadata>
+
+  <fx:Script>
+    <![CDATA[
+      import org.apache.royale.jewel.PopUp;
+      import org.apache.royale.events.CloseEvent;
+      import org.apache.royale.jewel.Button;
+      import org.apache.royale.events.MouseEvent;
+      import org.apache.royale.collections.ArrayList;
+      import org.apache.royale.examples.models.LovModel2;
+      import org.apache.royale.examples.events.LovEvent;
+      import org.apache.royale.jewel.Snackbar;
+      import org.apache.royale.examples.dto.GenericLOV;
+
+
+      [Bindable] 
+      [Inject(source="lovModel",required="true")]
+      public var lovModel:LovModel2;
+
+      [PostConstruct]
+      public function setUpCrux():void
+      {
+            trace('Card1 Inject model crux');
+      }
+        /**
+         * Function that handles the GET_LIST_VALUES_RESPONSE event of LovEvent, when fired, we show the user the message received from the backend.
+         */
+        [EventHandler(event = "LovEvent.GET_LIST_VALUES_RESPONSE",scope="global")]            
+        public function getLovComplete(event:LovEvent):void
+        {
+            Snackbar.show(event.result);
+            dispatchEvent(new Event('registerFM'));
+        }
+
+
+    ]]>
+  </fx:Script>
+
+  <j:beads>
+    <js:ContainerDataBinding/>
+  </j:beads>
+
+    <html:H3 text="Join Us !">
+    </html:H3>
+    <html:H6 text="Welcome to Spacio, to begin this journey, tell us what type of account you opening.">
+    </html:H6>
+    <j:Button text="Resident">
+    </j:Button>
+    <j:Button text="Facility Manager"
+              click="dispatchEvent(new Event('registerFM'))">
+    </j:Button>
+
+
+</j:Card>

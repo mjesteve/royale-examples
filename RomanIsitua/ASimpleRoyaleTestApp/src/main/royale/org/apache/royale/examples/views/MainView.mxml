@@ -1,22 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-
-Licensed to the Apache Software Foundation (ASF) under one or more
-contributor license agreements.  See the NOTICE file distributed with
-this work for additional information regarding copyright ownership.
-The ASF licenses this file to You under the Apache License, Version 2.0
-(the "License"); you may not use this file except in compliance with
-the License.  You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
--->
 <j:View xmlns:fx="http://ns.adobe.com/mxml/2009"
         xmlns:j="library://ns.apache.org/royale/jewel"
         xmlns:js="library://ns.apache.org/royale/basic"
@@ -24,18 +6,6 @@ limitations under the License.
         xmlns:views="org.apache.royale.examples.views.*"
         initComplete="initCompleteHandler(event)"
         stateChangeComplete="changeState(event)">
-
-  <j:beads>
-    <js:SimpleStatesImpl/>
-    <js:ViewDataBinding/>
-    <!-- <js:ContainerDataBinding/> -->
-  </j:beads>
-
-  <j:states>
-    <js:State name="joinus"/>
-    <js:State name="registerFM"/>
-    <js:State name="loggedIn"/>
-  </j:states>
 
   <!-- xmlns:binding="org.apache.royale.binding.*"  xmlns:models="org.apache.royale.examples.model.*"  xmlns:models="org.apache.royale.examples.service.*"
 
@@ -55,10 +25,8 @@ limitations under the License.
 
 
       [Bindable] 
-      [Inject( source = "lovModel", bind = "true")]     
+      [Inject( source = "lovModel", bind="true", required="true")]
       public var lovModel:LovModel2;
-
-      public var selectEstatePopup:PopUp;
 
       [PostConstruct]
       public function setUpCrux():void 
@@ -76,6 +44,8 @@ limitations under the License.
             lovModel.lovs2 = new ArrayList(ar);
 
       }
+
+      public var selectEstatePopup:PopUp;
 
 /*
         [Bindable]
@@ -212,6 +182,18 @@ limitations under the License.
       }
     ]]>
   </fx:Script>
+
+  <j:beads>
+    <js:SimpleStatesImpl/>
+    <js:ViewDataBinding/>
+    <!-- <js:ContainerDataBinding/> -->
+  </j:beads>
+
+  <j:states>
+    <js:State name="joinus"/>
+    <js:State name="registerFM"/>
+    <js:State name="loggedIn"/>
+  </j:states>
 
 
   <!--   <j:VGroup> -->
